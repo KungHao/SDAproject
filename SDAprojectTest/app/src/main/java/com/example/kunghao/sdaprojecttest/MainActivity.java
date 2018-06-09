@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
     }
 
     private void configViewPager() {
-        List<String> titles = new ArrayList<>();
-        titles.add("餐廳資訊");
-        titles.add("訂餐");
-        titles.add("修改");
+            List<String> titles = new ArrayList<>();
+            titles.add("餐廳資訊");
+            titles.add("訂餐");
+            titles.add("修改");
 
         //加入分頁
         tabLayout.addTab(tabLayout.newTab().setText(titles.get(0)));
@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity implements Tab1.OnFragmentIn
         viewPager.setAdapter(adapter);
 
         tabLayout.setupWithViewPager(viewPager);
-        tabLayout.setTabsFromPagerAdapter(adapter);
     }
 
 

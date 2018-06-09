@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,7 @@ public class Tab1 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-
+    private Context parent;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -76,6 +77,14 @@ public class Tab1 extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
         itemAdapter adapter = new itemAdapter();
         mRecyclerView.setAdapter(adapter);
+
+        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(adapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRecyclerView);
+
+//        RecyclerTouchListener recyclerTouchListener = new RecyclerTouchListener();
+//        mRecyclerView.setOnClickListener(adapter);
+
         return view;
     }
 
@@ -95,6 +104,7 @@ public class Tab1 extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+        parent = context;
     }
 
     @Override

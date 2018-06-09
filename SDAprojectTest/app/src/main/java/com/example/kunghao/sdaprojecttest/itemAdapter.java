@@ -5,11 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>{
+
+public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>
+        implements ItemTouchHelpAdapter{
 
     private List<Integer> item = new ArrayList<>();
 
@@ -21,25 +25,32 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mTxt;
-        public ViewHolder(View itemView) {
+        public ViewHolder(final View itemView) {
             super(itemView);
             mTxt = itemView.findViewById(R.id.restaurantTxt);
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    // item clicked
+                    Toast.makeText(itemView.getContext(), "123", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     @Override
-    public itemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.restaurant_item, parent, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }
 
     @Override
-    public void onBindViewHolder(itemAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         // 把資料設定給 ViewHolder
         holder.mTxt.setText(item.get(position).toString());
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -47,9 +58,21 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>{
     }
 
 
-    public void setRestaurant(List<String> restaurant){
-        for(int i = 0 ; i<restaurant.size();i++){
 
+    //長按並移動項目
+    public void onItemMove(int fromPosition, int toPostion){
+        if (fromPosition < toPostion){
+            //往下拉
+            for (int i = fromPosition ; i < toPostion ; i++){
+                Collections.swap(item, i, i+1);
+            }
+        }
+        else{
+            //往上拉
+            for (int i = fromPosition ; i > toPostion;i--){
+                Collections.swap(item, i , i-1);
+            }
         }
     }
+
 }
