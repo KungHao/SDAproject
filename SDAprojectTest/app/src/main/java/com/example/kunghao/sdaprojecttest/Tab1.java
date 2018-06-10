@@ -26,7 +26,7 @@ public class Tab1 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private Context parent;
+    private Restaurant restaurant;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -104,7 +104,6 @@ public class Tab1 extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-        parent = context;
     }
 
     @Override

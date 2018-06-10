@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,15 +26,19 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView mTxt;
+        ImageView mImage;
         public ViewHolder(final View itemView) {
             super(itemView);
             mTxt = itemView.findViewById(R.id.restaurantTxt);
+            mImage = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     // item clicked
                     Toast.makeText(itemView.getContext(), "123", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            mImage.setImageDrawable(itemView.getResources().getDrawable(R.drawable.buffet));
         }
     }
 
