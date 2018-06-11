@@ -3,11 +3,11 @@ package com.example.kunghao.sdaprojecttest;
 import android.widget.ImageView;
 
 public class Restaurant {
-    public ImageView image;
+    public int drawable;
     public String name;
 
-    public Restaurant(ImageView image, String name) {
-        this.image = image;
+    public Restaurant(int drawable, String name) {
+        this.drawable = drawable;
         this.name = name;
     }
 }

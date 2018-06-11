@@ -5,9 +5,9 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 
 public class ItemTouchHelperCallback extends ItemTouchHelper.Callback{
 
-    private ItemTouchHelpAdapter adapter;
+    private final ItemTouchHelpAdapter adapter;
 
-    ItemTouchHelperCallback(ItemTouchHelpAdapter adapter){
+    public ItemTouchHelperCallback(ItemTouchHelpAdapter adapter){
         this.adapter = adapter;
     }
 
@@ -25,9 +25,13 @@ public class ItemTouchHelperCallback extends ItemTouchHelper.Callback{
 
     @Override
     public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
-        adapter.onItemMove(viewHolder.getAdapterPosition(), target.getAdapterPosition());
-        return true;
+        final int fromPos = viewHolder.getAdapterPosition();
+        final int toPos = target.getAdapterPosition();
+        // move item in `fromPos` to `toPos` in adapter.
+        adapter.onItemMove(fromPos, toPos);
+        return true;// true if moved, false otherwise
     }
+
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {

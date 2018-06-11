@@ -8,29 +8,31 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
 public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>
-        implements ItemTouchHelpAdapter{
+        implements ItemTouchHelpAdapter, View.OnClickListener{
 
-    private List<Integer> item = new ArrayList<>();
+    private List<Restaurant> restaurant_list;
 
-    public itemAdapter(){
-        for (int i = 0 ; i < 10 ; i++){
-            item.add(i+1);
-        }
+    public itemAdapter(List<Restaurant> restaurant){
+        restaurant_list = restaurant;
+    }
+
+    @Override
+    public void onClick(View view) {
+
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
         TextView mTxt;
-        ImageView mImage;
         public ViewHolder(final View itemView) {
             super(itemView);
+            imageView = itemView.findViewById(R.id.imageView);
             mTxt = itemView.findViewById(R.id.restaurantTxt);
-            mImage = itemView.findViewById(R.id.imageView);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override public void onClick(View v) {
                     // item clicked
@@ -38,7 +40,6 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>
                 }
             });
 
-            mImage.setImageDrawable(itemView.getResources().getDrawable(R.drawable.buffet));
         }
     }
 
@@ -52,14 +53,17 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // 把資料設定給 ViewHolder
-        holder.mTxt.setText(item.get(position).toString());
+        Restaurant restaurant = restaurant_list.get(position);
+
+        holder.imageView.setImageResource(restaurant.drawable);
+        holder.mTxt.setText(restaurant.name);
     }
 
 
 
     @Override
     public int getItemCount() {
-        return item.size();
+        return restaurant_list.size();
     }
 
 
@@ -69,15 +73,16 @@ public class itemAdapter extends RecyclerView.Adapter<itemAdapter.ViewHolder>
         if (fromPosition < toPostion){
             //往下拉
             for (int i = fromPosition ; i < toPostion ; i++){
-                Collections.swap(item, i, i+1);
+                Collections.swap(restaurant_list, i, i+1);
             }
         }
         else{
             //往上拉
             for (int i = fromPosition ; i > toPostion;i--){
-                Collections.swap(item, i , i-1);
+                Collections.swap(restaurant_list, i , i-1);
             }
         }
+        notifyItemMoved(fromPosition, toPostion);
     }
 
 }

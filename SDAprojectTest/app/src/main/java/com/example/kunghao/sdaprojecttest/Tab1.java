@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,8 +29,7 @@ public class Tab1 extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private Restaurant restaurant;
-
+    private List<Restaurant> restaurant =new ArrayList<>();
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -64,8 +66,6 @@ public class Tab1 extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-
-
     }
 
     @Override
@@ -73,19 +73,32 @@ public class Tab1 extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab1, container, false);
         RecyclerView mRecyclerView = (RecyclerView) view.findViewById(R.id.item_list);
+        setRestaurant();
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mRecyclerView.getContext()));
-        itemAdapter adapter = new itemAdapter();
+        itemAdapter adapter = new itemAdapter(restaurant); //丟restaurant List 進去
         mRecyclerView.setAdapter(adapter);
 
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(adapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(mRecyclerView);
 
-//        RecyclerTouchListener recyclerTouchListener = new RecyclerTouchListener();
-//        mRecyclerView.setOnClickListener(adapter);
-
         return view;
+    }
+
+    public void setRestaurant() {
+        restaurant.add(new Restaurant(R.drawable.sandwich, "一餐早餐店"));
+        restaurant.add(new Restaurant(R.drawable.tea, "嚴茶"));
+        restaurant.add(new Restaurant(R.drawable.noodle, "溫州大混沌"));
+        restaurant.add(new Restaurant(R.drawable.dumpling, "四海遊龍"));
+        restaurant.add(new Restaurant(R.drawable.rice, "尚品排骨飯"));
+        restaurant.add(new Restaurant(R.drawable.dumpling1, "中式早餐店"));
+        restaurant.add(new Restaurant(R.drawable.curry, "地中海廚房"));
+        restaurant.add(new Restaurant(R.drawable.food, "牛排"));
+        restaurant.add(new Restaurant(R.drawable.friedrice, "親子丼飯"));
+        restaurant.add(new Restaurant(R.drawable.spaguetti, "甘味廚房"));
+
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -110,6 +123,7 @@ public class Tab1 extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        restaurant.clear();
     }
 
     /**
@@ -126,4 +140,6 @@ public class Tab1 extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 }
